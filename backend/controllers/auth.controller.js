@@ -1,4 +1,4 @@
-import { generateVerificationCode } from "../utils/generateVerificationCode.js";
+import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 import { User } from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 
@@ -16,11 +16,25 @@ export const signup = async (req, res) => {
     }
 
     const hashedPassword = await bcryptjs.hash(password, 10);
-    const verificationCode = generateVerificationCode();
+    const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();;
     const user = new User({
       email,
       password: hashedPassword,
       name,
+      verificationToken,
+      verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
+    });
+    await user.save();
+
+    //jwt
+    generateTokenAndSetCookie(res, user._id);
+    res.status(201).json({
+        success: true, 
+        message: "User Created Successfully",
+        user: {
+            ...user._doc,
+            password: null,
+        }
     });
     
   } catch (error) {

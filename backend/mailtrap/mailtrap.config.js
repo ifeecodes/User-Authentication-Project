@@ -3,39 +3,39 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const TOKEN = process.env.MAILTRAP_TOKEN;
+const EMAIL = process.env.MAILTRAP_DEMO_EMAIL;
+
+export const mailtrapClient = new MailtrapClient({
+  token: TOKEN,
+  //testInboxId: TEST_INBOX_ID,
+});
+export const sender = {
+  email: EMAIL ,
+  name:"Ifechukwu",
+};
+/**
+|--------------------------------------------------
+| const SANDBOX = process.env.MAILTRAP_USE_SANDBOX === "true";
+const TEST_INBOX_ID = SANDBOX ? Number(process.env.MAILTRAP_INBOX_ID) : undefined;
+const SENDER_EMAIL =
+  process.env.MAILTRAP_FROM_EMAIL || (SANDBOX ? "sandbox@example.com" : undefined);
 
 if (!TOKEN) {
   throw new Error("MAILTRAP_TOKEN is required to send email.");
 }
 
-const client = new MailtrapClient({
-  token: TOKEN,
-  sandbox: true,
-  testInboxId: 4962814,
-});
+if (SANDBOX && (!Number.isInteger(TEST_INBOX_ID) || TEST_INBOX_ID <= 0)) {
+  throw new Error("MAILTRAP_INBOX_ID must be a positive integer when sandbox mode is enabled.");
+}
 
-const sender = {
-  email: "mailtrap@demomailtrap.com",
-  name: "Mailtrap Test",
-};
-const recipients = [
-  {
-    email: "ifechukwuikenta@gmail.com",
-  }
-];
-
-client
-  .send({
-    from: sender,
-    to: recipients,
-    subject: "You are awesome!",
-    text: "Congrats for sending test email with Mailtrap!",
-    category: "Integration Test",
-  })
-  .then(
-    console.log,
-    (error) => {
-      const message = error instanceof Error ? error.message : "Unknown Mailtrap error";
-      console.error("Mailtrap send failed:", message);
-    },
+if (!SENDER_EMAIL) {
+  throw new Error(
+    "MAILTRAP_FROM_EMAIL must be set to an address on a verified domain when sandbox mode is disabled.",
   );
+}
+
+
+
+
+|--------------------------------------------------
+*/

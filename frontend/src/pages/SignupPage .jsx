@@ -10,7 +10,7 @@ const SignupPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate
+  const navigate = useNavigate();
  const {signup, error, isLoading} = useAuthStore();
   const handleSignup = async (e) => {
     e.preventDefault();

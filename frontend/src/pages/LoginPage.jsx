@@ -9,11 +9,11 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
- const {login, isLoading, error} = useAuthStore();
+  const { login, isLoading, error } = useAuthStore();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    await login(email, password)
+    await login(email, password);
   };
   return (
     <motion.div
@@ -52,14 +52,18 @@ const LoginPage = () => {
             </Link>
           </div>
 
-{error && <p className='text-red-500 font-semibold mt-2'>{error}</p>}
+          {error && <p className="text-red-500 font-semibold mt-2">{error}</p>}
           <motion.button
             className="mt-5 w-full py-3 px-4 bg-linear-to-r from-orange-500 to-pink-500 text-white font-bold rounded-lg shadow-lg hover:from-pink-500 hover:to-orange-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-200"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             type="submit"
           >
-            {isLoading ? <Loader className="w-6 h-6 animate-spin mx-auto" /> : "Login"}
+            {isLoading ? (
+              <Loader className="w-6 h-6 animate-spin mx-auto" />
+            ) : (
+              "Login"
+            )}
           </motion.button>
         </form>
       </div>
